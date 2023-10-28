@@ -1,0 +1,64 @@
+#appHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#screenContainer {
+  max-height: 70vh;
+  overflow: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.screen {
+  padding: 5px;
+  text-align: center;
+}
+
+#addUnit input {
+  width: clamp(100px, 40vw, 200px);
+}
+
+#addUnit input[name="short"] {
+  width: clamp(50px, 15vw, 100px);
+}
+
+#unitsSection {
+  display: inline-flex;
+}
+
+#unitsSection button {
+  margin: 5px;
+}
+
+@media (max-height: 650px) {
+  .screen>header {
+    display: none;
+  }
+}
+
+@media (max-height: 500px) {
+  h1 {
+    display: none;
+  }
+}
+
+@media (max-height: 400px) {
+  #appHeader {
+    position: static;
+  }
+
+  #screenContainer {
+    position: static;
+    transform: none;
+    max-height: unset;
+    overflow: unset;
+  }
+}

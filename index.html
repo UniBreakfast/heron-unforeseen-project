@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <!-- <script type="module" src="app.js"></script> -->
+
+  <title>PacerGame</title>
+</head>
+
+<body id="body">
+  <header id="appHeader">
+    <select id="scrSelectTop">
+      <option value="init-eval">Исходная оценка веры в себя</option>
+      <option value="add-unit">Добавить единицу измерения</option>
+      <option value="units">Единицы измерения</option>
+      <option value="add-act-type">Добавить тип действия</option>
+      <option value="add-activity">Добавить действие</option>
+      <option value="act-types">Типы действий</option>
+      <option value="activities">Действия</option>
+      <option value="settings">Настройки</option>
+    </select>
+    <h1>PacerGame</h1>
+  </header>
+
+  <main id="screenContainer">
+    <div class="screen" data-scr="init-eval" hidden>
+      <header></header>
+
+      <section id="evaluation">
+        <form action="javascript:" id="evalForm">
+          <label>
+            <p>
+              Оцени свою веру в себя cегодня<br>
+              по шкале от 1 до 10.
+            </p>
+
+            <select name="confidence" value="5">
+              <option value="1" style="color:red" disabled>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+
+            <p>
+              <small>учти, что 1 = <i>"я ничего не смогу сделать"</i>,<br><small>и при столь низкой вере в себя PacerGame не поможет.</small></small>
+            </p>
+          </label>
+
+          <br>
+          <button>Далее</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="add-unit" hidden>
+      <header></header>
+
+      <section id="addUnit">
+        <form action="javascript:" id="addUnitForm">
+          <label>
+            <p>Название во множественном числе:</p>
+            <input type="text" name="name" placeholder="минуты" title="единица измерения"
+              autocomplete="off" required>
+          </label>
+          <br>
+
+          <label>
+            <span>Cокращение:</span>
+            <input type="text" name="short" placeholder="мин" title="Сокращение для кратких записей: мин, сек, км, стр..." autocomplete="off" required>
+          </label>
+          <br>
+
+          <label>
+            <span>1</span>
+            <input type="text" name="name1" placeholder="минута" title="форма слова, используемая при счёте: одна минута, один раз..." autocomplete="off" required>
+          </label>
+          <br>
+
+          <label>
+            <span>3</span>
+            <input type="text" name="name3" placeholder="минуты" title="форма слова, используемая при счёте: три минуты, три раза..." autocomplete="off" required>
+          </label>
+          <br>
+
+          <label>
+            <span>5</span>
+            <input type="text" name="name5" placeholder="минут" title="форма слова, используемая при счёте: пять минут, пять раз..." autocomplete="off" required>
+          </label>
+          <br>
+
+          <label style="display:inline-flex; align-items:center;">
+            <span>Подходящий шаг<br>шкалы вариантов:</span>
+            <select name="steps" title="при создании действия будут предлагаться варианты с таким шагом" multiple size="5" required>
+              <option value="1">1</option>
+              <option value="*2" title="степени двойки">*2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="1000">1000</option>
+            </select>
+          </label>
+
+          <br>
+          <button>Добавить</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="units" hidden>
+      <header></header>
+
+      <section id="noUnitsSection">
+        <p>Здесь пока нет добавленных единиц измерения</p>
+        <br>
+
+        <button id="addUnitBtn">Добавить единицу измерения</button>
+      </section>
+
+      <section id="unitsSection" hidden>
+        <fieldset>
+          <select id="unitsSelect" multiple></select>
+        </fieldset>
+
+        <fieldset style="vertical-align: text-top">
+          <button id="unitDetailsBtn">Детальнее</button> <br>
+          <button id="editUnitBtn">Изменить</button> <br>
+          <button id="removeUnitsBtn">Удалить</button> <br><br><br>
+          <button id="moveUnitUpBtn">Поднять</button> <br>
+          <button id="moveUnitDownBtn">Опустить</button> <br><br><br>
+          <button id="addUnitBtn2">Добавить</button>
+        </fieldset>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="add-act-type" hidden>
+      <header></header>
+
+      <section id="noUnitsNoActsSection">
+        <p>Пока нет добавленных единиц измерения,<br>нельзя добавить типы действий</p>
+        <br>
+
+        <button id="addUnitBtn3">Добавить единицу измерения</button>
+      </section>
+
+      <section id="addActType" hidden>
+        <form action="javascript:" id="addActTypeForm">
+          <label>
+            <p>Название:</p>
+            <input type="text" name="name" placeholder="тип действия" title="тип действия" autocomplete="off" required>
+          </label>
+
+          <br>
+          <fieldset>
+            <label>
+              <p>Единицы измерения:</p>
+              <select name="units" multiple>
+                <option value="0">сутки</option>
+                <option value="1" selected>Минуты</option>
+                <option value="2" selected>Минуты (5)</option>
+                <option value="3" selected>Часы</option>
+                <option value="4">Задачи</option>
+                <option value="5">Строки</option>
+                <option value="6">Строки (5)</option>
+                <option value="7">Страницы</option>
+                <option value="8">Страницы (5)</option>
+                <option value="9">Повторения</option>
+                <option value="10">Повторения (5)</option>
+                <option value="11">Подходы</option>
+                <option value="12">Разы</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <span>Минуты</span>
+            
+            <label>
+              <span>от</span>
+              <select name="min" title="Актуальный минимум, меньше которого с этим шагом данное действие не понадобится">
+                <option value="1" selected>1</option>
+                <script>
+                  for (let i = 2; i <= 500; i++) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+              </select>
+            </label>
+  
+            <label>
+              <span>до</span>
+              <select name="max" title="Актуальный максимум, больше которого с этим шагом данное действие не понадобится">
+                <script>
+                  for (let i = 1; i < 500; i++) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+                <option value="500" selected>500</option>
+              </select>
+            </label>
+
+            <br>
+            <span>Минуты (5)</span>
+            
+            <label>
+              <span>от</span>
+              <select name="min" title="Актуальный минимум, меньше которого с этим шагом данное действие не понадобится">
+                <option value="5" selected>5</option>
+                <script>
+                  for (let i = 10; i <= 500; i += 5) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+              </select>
+            </label>
+  
+            <label>
+              <span>до</span>
+              <select name="max" title="Актуальный максимум, больше которого с этим шагом данное действие не понадобится">
+                <script>
+                  for (let i = 5; i < 500; i += 5) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+                <option value="500" selected>500</option>
+              </select>
+            </label>
+
+            <br>
+            <span>Часы</span>
+            
+            <label>
+              <span>от</span>
+              <select name="min" title="Актуальный минимум, меньше которого с этим шагом данное действие не понадобится">
+                <option value="1" selected>1</option>
+                <script>
+                  for (let i = 2; i <= 500; i++) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+              </select>
+            </label>
+  
+            <label>
+              <span>до</span>
+              <select name="max" title="Актуальный максимум, больше которого с этим шагом данное действие не понадобится">
+                <script>
+                  for (let i = 1; i < 500; i++) {
+                    document.write(`<option value="${i}">${i}</option>`)
+                  }
+                  document.currentScript.remove()
+                </script>
+                <option value="500" selected>500</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <br>
+          <button>Добавить</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="add-activity" hidden>
+      <header></header>
+
+      <section id="addActivity">
+        <form action="javascript:" id="addActivityForm">
+          <label>
+            <p>Тип действия:</p>
+            <select name="actId">
+              <option value="1" selected>Программирование</option>
+              <option value="2">Ходьба</option>
+              <option value="3">Бег</option>
+              <option value="4">Тренировка на площадке</option>
+              <option value="5">Тай-чи</option>
+              <option value="6">Duolingo</option>
+            </select>
+          </label>
+
+          <label>
+            <p>Примечание:</p>
+            <input type="text" name="note" placeholder="необязательное уточнение действия"
+              title="необязательное уточнение действия">
+          </label>
+
+          <label>
+            <span>Единицы измерения:</span>
+            <select name="units">
+              <option value="2" selected>Минуты (5)</option>
+              <option value="3">Часы</option>
+              <option value="4">Задачи</option>
+              <option value="5">Строки</option>
+              <option value="5">Строки (5)</option>
+            </select>
+          </label>
+
+          <br>
+          <label>
+            <span>Мера:</span>
+            <select name="amount">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+              <option value="45">45</option>
+              <option value="50">50</option>
+              <option value="55">55</option>
+              <option value="60">60</option>
+            </select>
+          </label>
+
+          <br>
+          <label>
+            <span>Субъективная сложность/трудность:</span>
+            <select name="amount">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </label>
+
+          <br>
+          <button>Добавить</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="act-types" hidden>
+      <header></header>
+
+      <section id="actTypes">
+        <p>Здесь пока нет добавленных типов действий</p>
+
+        <button id="addActTypeBtn">Добавить тип действия</button>
+    </div>
+
+    <div class="screen" data-scr="activities" hidden>
+      <header></header>
+
+      <section id="activities">
+        <p>Здесь пока нет добавленных действий</p>
+
+        <button id="addActivityBtn">Добавить действие</button>
+      </section>
+    </div>
+
+    <div class="screen" data-scr="settings" hidden>
+      <header></header>
+
+      <section id="settings">
+        <button id="clearRestartBtn">Очистить данные и начать с начала</button>
+      </section>
+    </div>
+  </main>
+</body>
+
+</html>

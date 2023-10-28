@@ -1,0 +1,58 @@
+[hidden] {
+  display: none !important;
+}
+
+body {
+  background-color: #eee;
+}
+
+input {
+  background-color: #fff;
+  margin: 10px;
+  width: clamp(200px, 50vw, 500px);
+  padding: 3px;
+  text-align: center;
+}
+
+::placeholder {
+  text-align: center;
+  color: #aaa;
+}
+
+select {
+  background-color: #fff;
+  margin: 10px;
+  padding: 3px;
+  text-align: center;
+}
+
+select[multiple] {
+  border: 2px solid white;
+  min-width: 100px;
+}
+
+select[multiple]:not([size]) {
+  height: clamp(100px, 35vh, 400px);
+}
+
+fieldset {
+  display: inline-block;
+  vertical-align: text-bottom;
+}
+
+button {
+  padding: 6px 18px;
+  background-color: #777;
+  color: #fff;
+}
+
+button:disabled {
+  background-color: #aaa;
+  color: #ddd;
+  cursor: default;
+}
+
+button:not(:disabled):hover {
+  background-color: #999;
+  cursor: pointer;
+}

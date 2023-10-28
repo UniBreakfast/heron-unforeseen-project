@@ -1,0 +1,14 @@
+h1 {
+  font-size: 40px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  width: 100%;
+  flex-shrink: 0;
+  color: #999;
+  text-align: center;
+}
+
+.screen>header {
+  margin-bottom: 10px;
+}
